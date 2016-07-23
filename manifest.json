@@ -1,0 +1,10 @@
+{
+	"name": "Accessible Restaurant Reviews",
+  "short_name": "Restaurant Reviews",
+	"scope": "./",
+	"start_url": "/",
+	"display": "standalone",
+	"orientation": "any",
+	"theme_color": "#4285f4",
+	"background_color": "#4285f4"
+}
