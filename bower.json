@@ -1,0 +1,21 @@
+{
+  "name": "restaurant-reviews",
+  "homepage": "https://github.com/nickhstr/restaurant-reviews",
+  "authors": [
+    "Nick Hester <nickhstr@gmail.com>"
+  ],
+  "description": "Reviews site for restuarants, designed specifically for a11y",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^1.6.0"
+  }
+}
