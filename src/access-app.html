@@ -1,8 +1,52 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 
 <dom-module id="access-app">
 	<template>
-		<h1>[[title]]</h1>
+		<style>
+			app-toolbar {
+				background-color: #faa;
+			}
+
+			.logo a {
+				pointer-events: auto;
+			}
+
+			.test {
+				height: 500px;
+				background-color: #aaccff;
+			}
+		</style>
+
+		<app-location route="{{route}}"></app-location>
+
+		<app-route
+			route="{{route}}"
+			pattern="/:page"
+			data="{{routeData}}"
+			tail="{{subroute}}">
+		</app-route>
+
+		<app-header-layout>
+			<app-header role="navigation" reveals>
+				<app-toolbar>
+					<div class="logo" main-title><a href="/" aria-label="Food for Thought Home">Food for Thought</a></div>
+					<a href="/restaurants">Restaurants</a>
+				</app-toolbar>
+			</app-header>
+
+			<iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+				<div name="home" class="test">Home</div>
+				<div name="restaurants" class="test">Restaurants</div>
+			</iron-pages>
+
+			<footer>El Footer</footer>
+		</app-header-layout>
 	</template>
 	<script>
 		
@@ -15,6 +59,12 @@
 				type: String,
 				value: 'Hello!'
 			}
+		},
+
+		observers: ['_routePathChanged(routeData.page)'],
+
+		_routePathChanged: function(page) {
+			this.page = page || 'home';
 		}
 
 	})
