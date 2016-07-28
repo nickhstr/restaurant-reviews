@@ -1,14 +1,24 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="access-home.html">
+<link rel="import" href="access-restaurants.html">
 
 <dom-module id="access-app">
 	<template>
 		<style>
+			:host {
+				--primary-theme-color: blue;
+				--secondary-theme-color: red;
+				--primary-padding: 20px;
+			}
+
 			app-toolbar {
 				background-color: #faa;
 			}
@@ -18,10 +28,25 @@
 			}
 
 			.test {
-				height: 500px;
+				min-height: 500px;
 				background-color: #aaccff;
+				padding: var(--primary-padding);
+			}
+
+			p {
+				margin: 0;
+			}
+
+			footer {
+				height: 200px;
 			}
 		</style>
+
+		<firebase-document
+		id="fd"
+		app-name="restaurants"
+		path="{{docPath}}"
+		data="{{docData}}"></firebase-document>
 
 		<app-location route="{{route}}"></app-location>
 
@@ -33,7 +58,7 @@
 		</app-route>
 
 		<app-header-layout>
-			<app-header role="navigation" reveals>
+			<app-header role="navigation" reveals effects="waterfall">
 				<app-toolbar>
 					<div class="logo" main-title><a href="/" aria-label="Food for Thought Home">Food for Thought</a></div>
 					<a href="/restaurants">Restaurants</a>
@@ -41,10 +66,16 @@
 			</app-header>
 
 			<iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-				<div name="home" class="test">Home</div>
-				<div name="restaurants" class="test">Restaurants</div>
+				<access-home name="home"></access-home>
+				<!-- <button on-tap="addRest">Add</button> -->
+				<access-restaurants name="restaurants"></access-restaurants>
 			</iron-pages>
 
+			<footer>El Footer</footer>
+			<footer>El Footer</footer>
+			<footer>El Footer</footer>
+			<footer>El Footer</footer>
+			<footer>El Footer</footer>
 			<footer>El Footer</footer>
 		</app-header-layout>
 	</template>
@@ -61,10 +92,32 @@
 			}
 		},
 
-		observers: ['_routePathChanged(routeData.page)'],
+		observers: [
+			'_routePathChanged(routeData.page)',
+			'_dataChanged(queryData)'
+		],
 
 		_routePathChanged: function(page) {
 			this.page = page || 'home';
+		},
+
+		_dataChanged: function(data) {
+			console.log(this.queryData);
+		},
+
+		addRest: function() {
+			this.docData = {
+				name: 'Skeeter\'s Grill',
+				address: '555 Main St. USA',
+				photo: 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Silver_Diner_Interior_View.jpg',
+				hours: '9am - 9pm'
+			};
+			this.$.fd.save('/restaurants');
+			this.$.fd.path = null;
+		},
+
+		restFilter: function(item) {
+			return item.address == '555 Main St. USA';
 		}
 
 	})
