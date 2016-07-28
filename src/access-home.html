@@ -1,0 +1,49 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="access-home">
+	<template>
+		<style>
+			:host {
+				display: block;
+				padding: var(--primary-padding);
+				background-color: #aaccff;
+			}
+
+			header {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				align-content: center;
+			}
+
+			h1 {
+				width: 100%;
+				text-align: center;
+			}
+
+			main {
+				height: 300px;
+			}
+		</style>
+
+		<header>
+			<h1>Welcome to Restaurant Reviews!</h1>
+			<h3>The premier review site.</h3>
+		</header>
+		<main>
+			Featured Restaurants
+		</main>
+	</template>
+	<script>
+		
+	Polymer({
+
+		is: 'access-home'
+
+	});
+
+	</script>
+</dom-module>

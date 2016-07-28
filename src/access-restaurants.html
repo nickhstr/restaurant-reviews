@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="access-restaurant.html">
+
+<dom-module id="access-restaurants">
+	<template>
+		<style>
+			div.resties {
+				background-color: #aaccff;
+			}
+
+			div.resties {
+				padding: 15px;
+			}
+
+			p {
+				margin: 0;
+			}
+		</style>
+
+		<firebase-query
+		id="fq"
+		app-name="restaurants"
+		path="/restaurants"
+		data="{{queryData}}"></firebase-query>
+
+		<div class="resties">
+			<template is="dom-repeat" items="[[queryData]]" as="restaurant">
+				<access-restaurant
+					name="[[restaurant.name]]"
+					address="[[restaurant.address]]"
+					rest-id="[[restaurant.$key]]"></access-restaurant>
+			</template>
+		</div>
+	</template>
+	<script>
+		
+	Polymer({
+
+		is: 'access-restaurants'
+
+	});
+
+	</script>
+</dom-module>

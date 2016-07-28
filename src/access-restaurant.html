@@ -1,0 +1,46 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="access-restaurant">
+	<template>
+		<style>
+			div.container {
+				padding: 10px;
+			}
+
+			h4 {
+				margin: 0;
+			}
+
+			p {
+				margin: 0;
+			}
+		</style>
+
+		<div class="container">
+			<h4>[[name]]</h4>
+			<p>[[address]]</p>
+		</div>
+	</template>
+	<script>
+		
+	Polymer({
+
+		is: 'access-restaurant',
+
+		properties: {
+			restId: {
+				value: '',
+				notify: true
+			}
+		},
+
+		observers: ['logVal(name, restId)'],
+
+		logVal: function(name, restId) {
+			console.log(name, restId);
+		}
+
+	});
+
+	</script>
+</dom-module>
