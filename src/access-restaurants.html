@@ -25,11 +25,19 @@
 		data="{{queryData}}"></firebase-query>
 
 		<div class="resties">
-			<template is="dom-repeat" items="[[queryData]]" as="restaurant">
+			<div>
+				<button on-tap="setSort" value="az">Sort A-Z</button>
+				<button on-tap="setSort" value="za">Sort Z-A</button>
+				<button on-tap="setFilter">Filter</button>
+				<button on-tap="reset">Reset</button>
+			</div>
+			<template is="dom-repeat" items="[[queryData]]" as="restaurant" sort="[[sort]]" filter="[[filter]]">
 				<access-restaurant
 					name="[[restaurant.name]]"
 					address="[[restaurant.address]]"
-					rest-id="[[restaurant.$key]]"></access-restaurant>
+					stars="[[restaurant.stars]]"
+					rest-id="[[restaurant.$key]]"
+					reviews="[[restaurant.reviews]]"></access-restaurant>
 			</template>
 		</div>
 	</template>
@@ -37,7 +45,53 @@
 		
 	Polymer({
 
-		is: 'access-restaurants'
+		is: 'access-restaurants',
+
+		properties: {
+			sort: {
+				type: Function,
+				notify: true
+			},
+			filter: {
+				type: Function,
+				notify: true
+			}
+		},
+
+		sortName: function(val) {
+			return function(a, b) {
+				var nameA = a.name.toUpperCase();
+				var nameB = b.name.toUpperCase();
+				if (nameA < nameB) {
+					return -val;
+				}
+				if (nameA > nameB) {
+					return val;
+				}
+				return 0;
+			};
+		},
+
+		setSort: function(e) {
+			var val = e.target.value;
+			if (val === 'az') {
+				this.sort = this.sortName(1);
+			}
+			else if (val === 'za') {
+				this.sort = this.sortName(-1);
+			}
+		},
+
+		setFilter: function() {
+			this.filter = function(item) {
+				return item.stars >= 4;
+			}
+		},
+
+		reset: function() {
+			this.sort = null;
+			this.filter = null;
+		}
 
 	});
 
