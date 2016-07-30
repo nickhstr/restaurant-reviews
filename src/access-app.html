@@ -9,6 +9,7 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="access-home.html">
 <link rel="import" href="access-restaurants.html">
+<link rel="import" href="access-reviews.html">
 
 <dom-module id="access-app">
 	<template>
@@ -38,7 +39,7 @@
 			}
 
 			footer {
-				height: 200px;
+				height: 700px;
 			}
 		</style>
 
@@ -51,10 +52,18 @@
 		<app-location route="{{route}}"></app-location>
 
 		<app-route
+			id="mainRoute"
 			route="{{route}}"
 			pattern="/:page"
 			data="{{routeData}}"
 			tail="{{subroute}}">
+		</app-route>
+
+		<app-route
+			id="secondRoute"
+			route="{{subroute}}"
+			pattern="/:restaurant"
+			data="{{secondRouteData}}">
 		</app-route>
 
 		<app-header-layout>
@@ -69,13 +78,9 @@
 				<access-home name="home"></access-home>
 				<!-- <button on-tap="addRest">Add</button> -->
 				<access-restaurants name="restaurants"></access-restaurants>
+				<access-reviews name="reviews" rest-id="[[restId]]"></access-reviews>
 			</iron-pages>
 
-			<footer>El Footer</footer>
-			<footer>El Footer</footer>
-			<footer>El Footer</footer>
-			<footer>El Footer</footer>
-			<footer>El Footer</footer>
 			<footer>El Footer</footer>
 		</app-header-layout>
 	</template>
@@ -86,23 +91,28 @@
 		is: 'access-app',
 
 		properties: {
-			title: {
+			restId: {
 				type: String,
-				value: 'Hello!'
+				value: '',
+				notify: true
 			}
 		},
 
 		observers: [
-			'_routePathChanged(routeData.page)',
-			'_dataChanged(queryData)'
+			'_routePathChanged(routeData.page)'
 		],
+
+		listeners: {
+			'newId': 'updateId'
+		},
 
 		_routePathChanged: function(page) {
 			this.page = page || 'home';
 		},
 
-		_dataChanged: function(data) {
-			console.log(this.queryData);
+		updateId: function(e) {
+			this.restId = e.detail.id;
+			this.reviews = e.detail.reviews;
 		},
 
 		addRest: function() {
