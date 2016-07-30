@@ -19,6 +19,7 @@
 		<div class="container">
 			<h4>[[name]]</h4>
 			<p>[[address]]</p>
+			<p>[[stars]] <a on-tap="sendId" href$="/reviews/[[restId]]">Read Reviews</a></p>
 		</div>
 	</template>
 	<script>
@@ -34,10 +35,11 @@
 			}
 		},
 
-		observers: ['logVal(name, restId)'],
-
-		logVal: function(name, restId) {
-			console.log(name, restId);
+		sendId: function() {
+			this.fire('newId', {
+				id: this.restId,
+				reviews: this.reviews
+			}, {bubbles: true});
 		}
 
 	});
