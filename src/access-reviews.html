@@ -1,0 +1,83 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+
+<dom-module id="access-reviews">
+	<template>
+		<style>
+			div.review {
+				padding: 20px;
+			}
+
+			h4 {
+				margin: 5px;
+			}
+
+			p {
+				margin: 0;
+			}
+		</style>
+
+		<firebase-query
+			id="reviewsQuery"
+			app-name="restaurants"
+			path="/restaurants/[[restId]]/reviews"
+			data="{{reviewsData}}">
+		</firebase-query>
+
+		<firebase-document
+			id="reviewDoc"
+			app-name="restaurants"
+			path="{{reviewPath}}"
+			data="{{reviewData}}">
+		</firebase-document>
+
+		<button on-tap="addReview">Add Review</button>
+
+		<template is="dom-repeat" items="[[reviews]]" as="review">
+			<div class="review">
+				<h4>[[review.name]]</h4>
+				<p>[[review.stars]]</p>
+				<p>[[review.comments]]</p>
+			</div>
+		</template>
+	</template>
+	<script>
+		
+	Polymer({
+
+		is: 'access-reviews',
+
+		properties: {
+			restId: {
+				type: String,
+				notify: true
+			},
+			reviewsData: {
+				notify: true,
+				observer: '_updateReviews'
+			},
+			reviews: {
+				notify: true
+			}
+		},
+
+		_updateReviews: function(newVal, oldVal) {
+			this.reviews = oldVal;
+		},
+
+		addReview: function() {
+			this.reviewData = {
+				name: 'Ms. Sassy Pants',
+				date: Date.now(),
+				stars: 3,
+				comments: 'I\'ve had better.'
+			};
+
+			this.$.reviewDoc.save('/restaurants/' + this.restId + '/reviews');
+			this.$.reviewDoc.path = null;
+		}
+
+	});
+
+	</script>
+</dom-module>
