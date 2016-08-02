@@ -1,12 +1,16 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/helpers/helpers.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="access-home.html">
 <link rel="import" href="access-restaurants.html">
 <link rel="import" href="access-reviews.html">
@@ -17,21 +21,25 @@
 			:host {
 				--primary-theme-color: blue;
 				--secondary-theme-color: red;
+				--primary-txt-color: #333;
 				--primary-padding: 20px;
+				font-family: 'Roboto', Helvetica, Arial, sans-serif;
 			}
 
 			app-toolbar {
-				background-color: #faa;
+				background-color: #fff;
+			}
+
+			.nav-title {
+				color: var(--primary-txt-color);
+				text-transform: uppercase;
+				font-weight: 700;
+				letter-spacing: 0.3em;
+				font-size: 0.8em;
 			}
 
 			.logo a {
 				pointer-events: auto;
-			}
-
-			.test {
-				min-height: 500px;
-				background-color: #aaccff;
-				padding: var(--primary-padding);
 			}
 
 			p {
@@ -40,14 +48,31 @@
 
 			footer {
 				height: 700px;
+				background-color: #333;
+				color: #fff;
+			}
+
+
+			@media (max-width: 550px) {
+				.title-text {
+					display: none;
+				}
 			}
 		</style>
 
+		<firebase-query
+			id="fq"
+			app-name="restaurants"
+			path="/restaurants"
+			data="{{queryData}}">
+		</firebase-query>
+
 		<firebase-document
-		id="fd"
-		app-name="restaurants"
-		path="{{docPath}}"
-		data="{{docData}}"></firebase-document>
+			id="fd"
+			app-name="restaurants"
+			path="{{docPath}}"
+			data="{{docData}}">
+		</firebase-document>
 
 		<app-location route="{{route}}"></app-location>
 
@@ -69,19 +94,28 @@
 		<app-header-layout>
 			<app-header role="navigation" reveals effects="waterfall">
 				<app-toolbar>
-					<div class="logo" main-title><a href="/" aria-label="Food for Thought Home">Food for Thought</a></div>
-					<a href="/restaurants">Restaurants</a>
+					<div class="logo" main-title>
+						<a class="nav-title" href="/" aria-label="Food for Thought Home">
+							<iron-icon icon="maps:restaurant-menu"></iron-icon>
+							<span class="title-text">[[appName]]</span>
+						</a>
+					</div>
+					<a class="nav-title" href="/restaurants">Restaurants</a>
 				</app-toolbar>
 			</app-header>
 
 			<iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-				<access-home name="home"></access-home>
+				<access-home
+					name="home"
+					query-data="[[queryData]]"
+					primary-title="Know before you go"
+					secondary-title="Real restaurants. Real reviews."></access-home>
 				<!-- <button on-tap="addRest">Add</button> -->
-				<access-restaurants name="restaurants"></access-restaurants>
+				<access-restaurants name="restaurants" query-data="[[queryData]]"></access-restaurants>
 				<access-reviews name="reviews" rest-id="[[restId]]"></access-reviews>
 			</iron-pages>
 
-			<footer>El Footer</footer>
+			<footer>[[appName]]</footer>
 		</app-header-layout>
 	</template>
 	<script>
@@ -91,6 +125,10 @@
 		is: 'access-app',
 
 		properties: {
+			appName: {
+				type: String,
+				value: 'Food for Thought'
+			},
 			restId: {
 				type: String,
 				value: '',
@@ -108,6 +146,7 @@
 
 		_routePathChanged: function(page) {
 			this.page = page || 'home';
+			Polymer.AppLayout.scroll({top: 0, behavior: 'silent'});
 		},
 
 		updateId: function(e) {
