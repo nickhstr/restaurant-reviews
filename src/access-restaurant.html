@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="access-stars.html">
 
 <dom-module id="access-restaurant">
 	<template>
@@ -19,7 +20,10 @@
 		<div class="container">
 			<h4>[[name]]</h4>
 			<p>[[address]]</p>
-			<p>[[stars]] <a on-tap="sendId" href$="/reviews/[[restId]]">Read Reviews</a></p>
+			<span>
+				<access-stars number-of-stars="[[stars]]"></access-stars>
+				<a on-tap="sendId" href$="/reviews/[[restId]]">Read Reviews</a>
+			</span>
 		</div>
 	</template>
 	<script>
