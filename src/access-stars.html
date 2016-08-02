@@ -1,0 +1,46 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="access-stars">
+	<template>
+		<style>
+			.stars {
+				transform: scale(0.75, 0.75);
+			}
+		</style>
+
+		<template is="dom-repeat" items="[[starsArr]]">
+			<iron-icon class="stars" icon="star"></iron-icon>
+		</template>
+	</template>
+	<script>
+		
+	Polymer({
+
+		is: 'access-stars',
+
+		properties: {
+			starsArr: {
+				type: Array,
+				value: [],
+				notify: true
+			},
+			numberOfStars: {
+				notify: true,
+				observer: '_updateStars'
+			}
+		},
+
+		_updateStars: function(newVal, oldVal) {
+			var len = newVal;
+			this.starsArr = [];
+
+			for (var i = 0; i < len; i++) {
+				this.push('starsArr', i);
+			}
+		}
+
+	});
+
+	</script>
+</dom-module>
