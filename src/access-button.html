@@ -1,0 +1,38 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="access-button">
+	<template>
+		<style>
+			access-button {
+				display: inline-block;
+			}
+
+			access-button > * {
+				display: inline-block;
+        box-sizing: border-box;
+        border: 2px solid #000;
+        background-color: #FFF;
+        color: var(--primary-txt-color);
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0;
+        padding: 8px 44px;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        border-radius: 0;
+        outline: none;
+        -webkit-appearance: none;
+			}
+
+			access-button > *:focus {
+				background-color: #eee;
+			}
+
+			access-button > *:active {
+				background-color: #000;
+				color: #fff;
+			}
+		</style>
+	</template>
+</dom-module>
