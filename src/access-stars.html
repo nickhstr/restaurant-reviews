@@ -4,8 +4,13 @@
 <dom-module id="access-stars">
 	<template>
 		<style>
-			.stars {
+			:host[small] > .stars {
 				transform: scale(0.75, 0.75);
+				margin: -0.2em;
+			}
+			:host[big] > .stars {
+				transform: scale(1.25, 1.25);
+				margin: 0.2em;
 			}
 		</style>
 
@@ -39,7 +44,6 @@
 				this.push('starsArr', i);
 			}
 		}
-
 	});
 
 	</script>
