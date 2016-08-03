@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="access-restaurant.html">
+<link rel="import" href="access-menu.html">
 
 <dom-module id="access-restaurants">
 	<template>
@@ -44,6 +45,11 @@
 			},
 			filter: {
 				type: Function,
+				notify: true
+			},
+			sortOptions: {
+				type: Array,
+				value: ['one', 'two', 'three'],
 				notify: true
 			}
 		},
