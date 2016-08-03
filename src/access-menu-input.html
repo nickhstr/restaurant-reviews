@@ -1,0 +1,38 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+
+<dom-module id="access-menu-input">
+	<template>
+		<style>
+			paper-dropdown-menu {
+				width: 100px;
+			}
+		</style>
+	
+		<paper-dropdown-menu label="[[label]]">
+			<paper-menu class="dropdown-content">
+				<template is="dom-repeat" items="[[items]]">
+					<paper-item>[[item]]</paper-item>
+				</template>
+			</paper-menu>
+		</paper-dropdown-menu>
+	</template>
+	<script>
+		
+	Polymer({
+
+		is: 'access-menu-input',
+
+		properties: {
+			items: {
+				type: Array,
+				notify: true
+			}
+		}
+
+	});
+
+	</script>
+</dom-module>

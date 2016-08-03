@@ -1,0 +1,36 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="access-footer">
+	<template>
+		<style>
+			footer {
+				text-align: center;
+			}
+
+			h3 {
+				display: inline-block;
+				font-size: 1.2em;
+				letter-spacing: 0.3em;
+				text-transform: uppercase;
+			}
+
+			a {
+				text-decoration: var(--txt-decoration);
+				color: inherit;
+			}
+		</style>
+
+		<footer>
+			<a href="[[url]]"><h3>[[footerTitle]]</h3></a>
+		</footer>
+	</template>
+	<script>
+		
+	Polymer({
+
+		is: 'access-footer'
+
+	});
+
+	</script>
+</dom-module>
