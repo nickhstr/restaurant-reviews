@@ -14,6 +14,7 @@
 <link rel="import" href="access-home.html">
 <link rel="import" href="access-restaurants.html">
 <link rel="import" href="access-reviews.html">
+<link rel="import" href="access-footer.html">
 
 <dom-module id="access-app">
 	<template>
@@ -23,7 +24,13 @@
 				--secondary-theme-color: red;
 				--primary-txt-color: #333;
 				--primary-padding: 20px;
+				--txt-decoration: none;
 				font-family: 'Roboto', Helvetica, Arial, sans-serif;
+				color: var(--primary-txt-color);
+			}
+
+			a {
+				text-decoration: var(--txt-decoration);
 			}
 
 			app-toolbar {
@@ -46,12 +53,6 @@
 				margin: 0;
 			}
 
-			footer {
-				height: 700px;
-				background-color: #333;
-				color: #fff;
-			}
-
 
 			@media (max-width: 550px) {
 				.title-text {
@@ -66,16 +67,13 @@
 			path="/restaurants"
 			data="{{queryData}}">
 		</firebase-query>
-
 		<firebase-document
 			id="fd"
 			app-name="restaurants"
 			path="{{docPath}}"
 			data="{{docData}}">
 		</firebase-document>
-
 		<app-location route="{{route}}"></app-location>
-
 		<app-route
 			id="mainRoute"
 			route="{{route}}"
@@ -83,14 +81,6 @@
 			data="{{routeData}}"
 			tail="{{subroute}}">
 		</app-route>
-
-		<app-route
-			id="secondRoute"
-			route="{{subroute}}"
-			pattern="/:restaurant"
-			data="{{secondRouteData}}">
-		</app-route>
-
 		<app-header-layout>
 			<app-header role="navigation" reveals effects="waterfall">
 				<app-toolbar>
@@ -103,7 +93,6 @@
 					<a class="nav-title" href="/restaurants">Restaurants</a>
 				</app-toolbar>
 			</app-header>
-
 			<iron-pages role="main" selected="[[page]]" attr-for-selected="name">
 				<access-home
 					name="home"
@@ -114,8 +103,7 @@
 				<access-restaurants name="restaurants" query-data="[[queryData]]"></access-restaurants>
 				<access-reviews name="reviews" rest-id="[[restId]]"></access-reviews>
 			</iron-pages>
-
-			<footer>[[appName]]</footer>
+			<access-footer url="/" footer-title="[[appName]]"></access-footer>
 		</app-header-layout>
 	</template>
 	<script>
