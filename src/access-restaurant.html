@@ -15,13 +15,18 @@
 			p {
 				margin: 0;
 			}
+
+			a {
+				text-decoration: var(--txt-decoration);
+				color: var(--primary-txt-color);
+			}
 		</style>
 
 		<div class="container">
 			<h4>[[name]]</h4>
 			<p>[[address]]</p>
 			<span>
-				<access-stars number-of-stars="[[stars]]"></access-stars>
+				<access-stars small number-of-stars="[[stars]]"></access-stars>
 				<a on-tap="sendId" href$="/reviews/[[restId]]">Read Reviews</a>
 			</span>
 		</div>
