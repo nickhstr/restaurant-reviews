@@ -1,34 +1,78 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="access-stars.html">
+<link rel="import" href="access-button.html">
 
 <dom-module id="access-restaurant">
 	<template>
-		<style>
-			div.container {
-				padding: 10px;
+		<style include="access-button">
+			:host {
+				display: inline-block;
 			}
 
+			.center-wrap {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+
+			.container {
+				margin: 20px;
+				width: 300px;
+			}
+
+			div.bg-img {
+				height: 225px;
+				width: 100%;
+			}
+
+			.details {
+				margin: 20px auto;
+			}
+
+			h4, p {
+				margin: 0;
+				width: 100%;
+				text-align: center;
+			}
+			
 			h4 {
-				margin: 0;
+				font-size: 2em;
+				font-weight: 100;
 			}
 
-			p {
-				margin: 0;
+			.secondary {
+				font-weight: 100;
 			}
 
-			a {
-				text-decoration: var(--txt-decoration);
-				color: var(--primary-txt-color);
+			access-button {
+				width: 100%;
+				text-align: center;
+				margin: 20px auto;
+			}
+
+			access-star {
+				width: 100%;
 			}
 		</style>
 
-		<div class="container">
+		<!-- <div class="container">
 			<h4>[[name]]</h4>
 			<p>[[address]]</p>
+			<p>[[type]]</p>
 			<span>
 				<access-stars small number-of-stars="[[stars]]"></access-stars>
 				<a on-tap="sendId" href$="/reviews/[[restId]]">Read Reviews</a>
 			</span>
+		</div> -->
+		<div class="container center-wrap">
+			<div class="bg-img" aria-label="Image of Restaurant"></div>
+			<div class="details center-wrap">
+				<h4>[[name]]</h4>
+				<p class="secondary">[[address]]</p>
+				<p class="secondary">[[type]]</p>
+				<access-stars small number-of-stars="[[stars]]"></access-stars>
+				<access-button><a on-tap="sendId" href$="/reviews/[[restId]]">Read Reviews</a></access-button>
+			</div>
 		</div>
 	</template>
 	<script>
@@ -41,7 +85,14 @@
 			restId: {
 				value: '',
 				notify: true
+			},
+			image: {
+				observer: '_updateImage'
 			}
+		},
+
+		_updateImage: function(newImage, oldImage) {
+			this.$$('.bg-img').style.background = 'url(' + newImage + ') no-repeat center center';
 		},
 
 		sendId: function() {
