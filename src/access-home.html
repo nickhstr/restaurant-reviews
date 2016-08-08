@@ -67,18 +67,28 @@
 			.rest-name {
 				font-size: 2em;
 				font-weight: 100;
-				margin: 0.5em;
+				margin: 0.3em 0.3em 0;
+			}
+
+			p {
+				margin: 5px;
+				font-weight: 100;
+			}
+
+			.last {
+				margin: 5em auto;
 			}
 
 			h2 {
 				text-align: center;
 				font-weight: 100;
 				font-size: 2em;
+				margin: 0;
 			}
 
 			p.home-p {
 				text-align: center;
-				font-size: 1.5em;
+				font-size: 1.2em;
 				font-weight: 100;
 				margin: 0 10vw;
 				width: 80vw;
@@ -120,7 +130,7 @@
 				<h4 class="featured-title"><em>Today's Featured Restaurant</em></h4>
 				<template is="dom-repeat" items="[[queryData]]" as="restaurant" filter="featFilter">
 					<div class="featured-img">
-						<img src="[[restaurant.photo]]" alt="Image of Restaurant">
+						<img src="[[restaurant.photo]]" alt="Image of Featured Restaurant">
 						<div class="featured-content">
 							<h4 class="rest-name">[[restaurant.name]]</h4>
 							<p>[[restaurant.address]]</p>
