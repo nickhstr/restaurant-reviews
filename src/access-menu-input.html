@@ -7,11 +7,11 @@
 	<template>
 		<style>
 			paper-dropdown-menu {
-				width: 100px;
+				width: var(--input-width);
 			}
 		</style>
 	
-		<paper-dropdown-menu label="[[label]]">
+		<paper-dropdown-menu label="[[label]]" value={{dropVal}}>
 			<paper-menu class="dropdown-content">
 				<template is="dom-repeat" items="[[items]]">
 					<paper-item>[[item]]</paper-item>
@@ -29,7 +29,15 @@
 			items: {
 				type: Array,
 				notify: true
+			},
+			dropVal: {
+				observer: '_sendVal'
 			}
+		},
+
+		_sendVal: function(newVal, oldVal) {
+			this.fire('newval', {dropVal: this.dropVal});
+
 		}
 
 	});
