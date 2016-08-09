@@ -1,11 +1,22 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="access-review.html">
+<link rel="import" href="access-button.html">
 
 <dom-module id="access-reviews">
 	<template>
-		<style>
-			div.review {
-				padding: 20px;
+		<style include="access-button">
+			.add-review {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+			}
+
+			.reviews {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+				margin-bottom: 4em;
 			}
 
 			h4 {
@@ -14,6 +25,13 @@
 
 			p {
 				margin: 0;
+			}
+
+
+			@media (max-width: 800px) {
+				.reviews {
+					justify-content: flex-start;
+				}
 			}
 		</style>
 
@@ -30,16 +48,21 @@
 			path="{{reviewPath}}"
 			data="{{reviewData}}">
 		</firebase-document>
+		
+		<section class="add-review">
+			<access-button>
+				<button>Add Review</button>
+			</access-button>
+		</section>
 
-		<button on-tap="addReview">Add Review</button>
-
-		<template is="dom-repeat" items="[[reviews]]" as="review">
-			<div class="review">
-				<h4>[[review.name]]</h4>
-				<p>[[review.stars]]</p>
-				<p>[[review.comments]]</p>
-			</div>
-		</template>
+		<section class="reviews">
+			<template is="dom-repeat" items="[[reviews]]" as="review">
+				<access-review
+					name="[[review.name]]"
+					stars="[[review.stars]]"
+					comments="[[review.comments]]"></access-review>
+			</template>
+		</section>
 	</template>
 	<script>
 		
@@ -66,11 +89,12 @@
 		},
 
 		addReview: function() {
+			var d = new Date();
 			this.reviewData = {
-				name: 'Ms. Sassy Pants',
-				date: Date.now(),
-				stars: 3,
-				comments: 'I\'ve had better.'
+				name: 'Sir Ristorante',
+				date: d.toDateString(),
+				stars: 5,
+				comments: 'Simply exquisite.'
 			};
 
 			this.$.reviewDoc.save('/restaurants/' + this.restId + '/reviews');
