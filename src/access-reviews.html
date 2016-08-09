@@ -10,21 +10,18 @@
 				width: 100%;
 				display: flex;
 				justify-content: center;
+				margin: 20px auto;
 			}
 
 			.reviews {
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: space-around;
+				justify-content: flex-start;
 				margin-bottom: 4em;
 			}
 
-			h4 {
-				margin: 5px;
-			}
-
-			p {
-				margin: 0;
+			access-review {
+				margin: 20px;
 			}
 
 
@@ -51,7 +48,7 @@
 		
 		<section class="add-review">
 			<access-button>
-				<button>Add Review</button>
+				<button on-tap="openModal">Add Review</button>
 			</access-button>
 		</section>
 
@@ -92,13 +89,17 @@
 			var d = new Date();
 			this.reviewData = {
 				name: 'Sir Ristorante',
-				date: d.toDateString(),
+				date: d,
 				stars: 5,
 				comments: 'Simply exquisite.'
 			};
 
 			this.$.reviewDoc.save('/restaurants/' + this.restId + '/reviews');
 			this.$.reviewDoc.path = null;
+		},
+
+		openModal: function() {
+			this.fire('open');
 		}
 
 	});
