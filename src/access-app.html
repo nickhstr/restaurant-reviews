@@ -15,6 +15,7 @@
 <link rel="import" href="access-restaurants.html">
 <link rel="import" href="access-reviews.html">
 <link rel="import" href="access-footer.html">
+<link rel="import" href="access-new-review.html">
 
 <dom-module id="access-app">
 	<template>
@@ -53,6 +54,11 @@
 
 			p {
 				margin: 0;
+			}
+
+			paper-dialog {
+				width: 90vw;
+				height: 90vh;
 			}
 
 
@@ -103,10 +109,11 @@
 					secondary-title="Real restaurants. Real reviews."></access-home>
 				<!-- <button on-tap="addRest">Add</button> -->
 				<access-restaurants name="restaurants" query-data="[[queryData]]"></access-restaurants>
-				<access-reviews name="reviews" rest-id="[[restId]]"></access-reviews>
+				<access-reviews name="reviews" rest-id="[[restId]]" on-open="openModal"></access-reviews>
 			</iron-pages>
 			<access-footer url="/" footer-title="[[appName]]"></access-footer>
 		</app-header-layout>
+		<access-new-review id="newReviewModal"></access-new-review>
 	</template>
 	<script>
 		
@@ -155,8 +162,8 @@
 			this.$.fd.path = null;
 		},
 
-		restFilter: function(item) {
-			return item.address == '555 Main St. USA';
+		openModal: function() {
+			this.$.newReviewModal.open();
 		}
 
 	})
