@@ -1,0 +1,175 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="access-button.html">
+
+<dom-module id="access-new-review">
+	<template>
+		<style include="access-button">
+			paper-dialog {
+				width: 70vw;
+				padding: 20px;
+				display: flex;
+				flex-wrap: wrap;
+			}
+
+			paper-input, paper-textarea {
+				display: inline-block;
+				box-sizing: border-box;
+				width: 100%;
+			}
+
+			paper-input.half {
+				width: 50%;
+			}
+
+			paper-input.quarter {
+				width: 25%;
+			}
+
+			access-button {
+				display: block;
+				width: 100%;
+				text-align: center;
+				margin: 50px auto;
+			}
+
+			.close {
+				order: -1;
+				width: 100%;
+				margin: 0;
+				padding: 0 20px;
+				text-align: right;
+			}
+
+			.close > button {
+				-webkit-appearance: none;
+				appearance: none;
+				border: none;
+				background: transparent;
+				padding: 0;
+			}
+
+			.close > button:hover {
+				cursor: pointer;
+			}
+
+			iron-icon {
+				margin: 0;
+				padding: 0;
+			}
+
+
+			@media (max-width: 975px) {
+				paper-input.half {
+					width: 60%
+				}
+
+				paper-input.quarter {
+					width: 30%
+				}
+			}
+
+			@media (max-width: 820px) {
+				paper-dialog {
+					width: 85vw;
+				}
+			}
+
+			@media (max-width: 675px) {
+				paper-dialog {
+					width: 90vw;
+				}
+
+				paper-input.half {
+					width: 80%;
+				}
+
+				paper-input.quarter {
+					width: 50%;
+				}
+			}
+
+			@media (max-width: 445px) {
+				paper-dialog {
+					width: 95vw;
+					margin: auto 20px;
+				}
+
+				paper-input.half, paper-input.quarter {
+					width: 100%;
+				}
+
+				paper-input, paper-textarea,  {
+					padding: 10px;
+				}
+
+				.close {
+					padding: 0 10px;
+				}
+			}
+		</style>
+
+		<paper-dialog id="addReview" modal>
+			<paper-input
+				autofocus
+				class="half"
+				label="Name"
+				type="text"
+				autocomplete="name"
+				auto-validate
+				error-message="Please enter your name"
+				required>
+			</paper-input>
+			<paper-input
+				class="quarter"
+				label="Stars"
+				placeholder="0 to 5"
+				type="number"
+				min="0"
+				max="5"
+				step="1"
+				auto-validate
+				error-message="Please enter a rating"
+				required>
+			</paper-input>
+			<paper-textarea
+				label="Comments"
+				type="text"
+				auto-validate
+				error-message="Please leave a review"
+				value="Your review goes here."
+				required>
+			</paper-textarea>
+			<access-button>
+				<button type="submit">Submit</button>
+			</access-button>
+			<div class="close">
+				<button aria-label="close dialog" on-tap="close">
+					<iron-icon icon="close"></iron-icon>
+				</button>
+			</div>
+		</paper-dialog>
+	</template>
+	<script>
+		
+	Polymer({
+
+		is: 'access-new-review',
+
+		properties: {},
+
+		close: function() {
+			this.$.addReview.close();
+		},
+
+		open: function() {
+			this.$.addReview.open();
+		}
+
+	});
+
+	</script>
+</dom-module>
