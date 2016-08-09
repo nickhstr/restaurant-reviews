@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="access-stars.html">
+
+<dom-module id="access-review">
+	<template>
+		<style>
+			article {
+				padding: 20px;
+				width: 45vw;
+				text-align: center;
+			}
+
+			h4, p {
+				margin: 0;
+				font-weight: 100;
+			}
+
+			h4 {
+				font-size: 2em;
+			}
+
+
+			@media (max-width: 800px) {
+				article {
+					text-align: left;
+				}
+			}
+		</style>
+
+		<article>
+			<access-stars big number-of-stars="[[stars]]"></access-stars>
+			<h4>[[name]]</h4>
+			<p>[[comments]]</p>
+		</article>
+	</template>
+	<script>
+		
+	Polymer({
+
+		is: 'access-review'
+
+	});
+
+	</script>
+</dom-module>
