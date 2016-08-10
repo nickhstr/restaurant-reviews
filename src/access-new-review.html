@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-input/paper-textarea.html">
@@ -34,6 +35,19 @@
 				width: 100%;
 				text-align: center;
 				margin: 50px auto;
+			}
+
+			button {
+				transition: border 0.5s, color 0.5s;
+			}
+
+			button[disabled] {
+				border: 2px solid var(--secondary-txt-color);
+				color: var(--secondary-txt-color);
+			}
+
+			button[disabled]:hover {
+				cursor: default;
 			}
 
 			.close {
@@ -112,46 +126,59 @@
 			}
 		</style>
 
-		<paper-dialog id="addReview" modal>
-			<paper-input
-				autofocus
-				class="half"
-				label="Name"
-				type="text"
-				autocomplete="name"
-				auto-validate
-				error-message="Please enter your name"
-				required>
-			</paper-input>
-			<paper-input
-				class="quarter"
-				label="Stars"
-				placeholder="0 to 5"
-				type="number"
-				min="0"
-				max="5"
-				step="1"
-				auto-validate
-				error-message="Please enter a rating"
-				required>
-			</paper-input>
-			<paper-textarea
-				label="Comments"
-				type="text"
-				auto-validate
-				error-message="Please leave a review"
-				value="Your review goes here."
-				required>
-			</paper-textarea>
-			<access-button>
-				<button type="submit">Submit</button>
-			</access-button>
-			<div class="close">
-				<button aria-label="close dialog" on-tap="close">
-					<iron-icon icon="close"></iron-icon>
-				</button>
-			</div>
-		</paper-dialog>
+		<firebase-document
+			id="reviewDoc"
+			app-name="restaurants"
+			path="{{reviewPath}}"
+			data="{{reviewData}}">
+		</firebase-document>
+		
+		<div role="form" aria-label="New review dialog">
+			<paper-dialog id="addReview" modal>
+				<paper-input
+					autofocus
+					class="half"
+					label="Name"
+					type="text"
+					autocomplete="name"
+					auto-validate
+					error-message="Please enter your name"
+					required
+					invalid="{{invalidName}}"
+					value="{{nameValue}}">
+				</paper-input>
+				<paper-input
+					class="quarter"
+					label="Rating"
+					placeholder="0 to 5"
+					type="number"
+					min="0"
+					max="5"
+					step="1"
+					auto-validate
+					error-message="Please enter a rating"
+					required
+					invalid="{{invalidRating}}"
+					value="{{ratingValue}}">
+				</paper-input>
+				<paper-textarea
+					label="Comments"
+					type="text"
+					auto-validate
+					error-message="Please leave a review"
+					value="{{reviewValue}}"
+					required>
+				</paper-textarea>
+				<access-button>
+					<button disabled$="{{formInvalid}}" type="submit" on-tap="addReview">Submit</button>
+				</access-button>
+				<div class="close">
+					<button aria-label="close dialog" on-tap="close">
+						<iron-icon icon="close"></iron-icon>
+					</button>
+				</div>
+			</paper-dialog>
+		</div>
 	</template>
 	<script>
 		
@@ -159,7 +186,51 @@
 
 		is: 'access-new-review',
 
-		properties: {},
+		properties: {
+			restId: {
+				type: String,
+				notify: true
+			},
+			formInvalid: {
+				type: Boolean,
+				notify: true
+			},
+			reviewValue: {
+				type: String,
+				value: 'Your review goes here.',
+				notify: true
+			}
+		},
+
+		observers: [
+			'_reviewValidator(invalidName, nameValue, invalidRating, ratingValue, reviewValue)'
+		],
+
+		_reviewValidator: function(invalidName, nameValue, invalidRating, ratingValue, review) {
+			if (invalidName === false && nameValue.length > 0 && invalidRating === false && ratingValue.length > 0 && review.length > 0) {
+				this.formInvalid = false;
+			}
+			else {
+				this.formInvalid = true;
+			}
+		},
+
+		addReview: function() {
+			if (this.formInvalid === false) {
+				var d = Date.now();
+				this.reviewData = {
+					name: this.nameValue,
+					date: d,
+					stars: parseInt(this.ratingValue, 10),
+					comments: this.reviewValue
+				}
+
+				this.$.reviewDoc.save('/restaurants/' + this.restId + '/reviews');
+				this.$.reviewDoc.path = null;
+
+				this.close();
+			}
+		},
 
 		close: function() {
 			this.$.addReview.close();
