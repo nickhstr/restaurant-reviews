@@ -37,7 +37,7 @@
 			}
 		</style>
 
-		<div class="menu center-wrap">
+		<div class="menu center-wrap" role="menu">
 			<access-menu-input
 				label="Sort By"
 				items="[[sortOptions]]"
@@ -56,7 +56,9 @@
 					rest-id="[[restaurant.$key]]"
 					type="[[restaurant.type]]"
 					reviews="[[restaurant.reviews]]"
-					image="[[restaurant.photo]]"></access-restaurant>
+					image="[[restaurant.photo]]"
+					hours="[[restaurant.hours]]"
+					role="listitem"></access-restaurant>
 			</template>
 		</div>
 	</template>
@@ -82,15 +84,15 @@
 			},
 			filterOptions: {
 				type: Array,
-				value: ['None', 'Top Rated'],
+				value: ['None', 'Top Rated', 'Lowest Rated'],
 				notify: true
+			},
+			ariaLabel: {
+				value: 'Restaurants',
+				reflectToAttribute: true
 			}
 		},
-
-		_logVal: function(e) {
-			console.log(e.detail.dropVal);
-		},
-
+		
 		sortName: function(val) {
 			return function(a, b) {
 				var nameA = a.name.toUpperCase();
@@ -123,6 +125,11 @@
 			if (val === 'Top Rated') {
 				this.filter = function(item) {
 					return item.stars >= 4;
+				}
+			}
+			else if (val === 'Lowest Rated') {
+				this.filter = function(item) {
+					return item.stars <= 3;
 				}
 			}
 			else if (val === 'None') {

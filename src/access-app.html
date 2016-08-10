@@ -24,7 +24,7 @@
 				--primary-theme-color: blue;
 				--secondary-theme-color: red;
 				--primary-txt-color: #000;
-				--secondary-txt-color: #757575;
+				--secondary-txt-color: #999;
 				--primary-padding: 20px;
 				--txt-decoration: none;
 				--paper-input-container-focus-color: var(--primary-txt-color);
@@ -103,17 +103,28 @@
 			</app-header>
 			<iron-pages role="main" selected="[[page]]" attr-for-selected="name">
 				<access-home
+					role="article"
 					name="home"
 					query-data="[[queryData]]"
 					primary-title="Know before you go"
-					secondary-title="Real restaurants. Real reviews."></access-home>
-				<!-- <button on-tap="addRest">Add</button> -->
-				<access-restaurants name="restaurants" query-data="[[queryData]]"></access-restaurants>
-				<access-reviews name="reviews" rest-id="[[restId]]" on-open="openModal"></access-reviews>
+					secondary-title="Real restaurants. Real reviews.">
+				</access-home>
+				<access-restaurants 
+					role="list"
+					name="restaurants"
+					query-data="[[queryData]]">
+				</access-restaurants>
+				<access-reviews
+					role="list"
+					name="reviews"
+					rest-id="[[restId]]"
+					on-open="openModal">
+				</access-reviews>
 			</iron-pages>
 			<access-footer url="/" footer-title="[[appName]]"></access-footer>
+			<!-- <button on-tap="addRest">Add</button> -->
 		</app-header-layout>
-		<access-new-review id="newReviewModal"></access-new-review>
+		<access-new-review id="newReviewModal" rest-id="[[restId]]" role="dialog"></access-new-review>
 	</template>
 	<script>
 		
@@ -143,6 +154,9 @@
 
 		_routePathChanged: function(page) {
 			this.page = page || 'home';
+			if (page !== 'reviews') {
+				this.restId = '';
+			}
 			Polymer.AppLayout.scroll({top: 0, behavior: 'silent'});
 		},
 
@@ -151,16 +165,18 @@
 			this.reviews = e.detail.reviews;
 		},
 
-		addRest: function() {
-			this.docData = {
-				name: 'Skeeter\'s Grill',
-				address: '555 Main St. USA',
-				photo: 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Silver_Diner_Interior_View.jpg',
-				hours: '9am - 9pm'
-			};
-			this.$.fd.save('/restaurants');
-			this.$.fd.path = null;
-		},
+		// addRest: function() {
+		// 	this.docData = {
+		// 		name: 'Mario\'s Super Ristorante',
+		// 		address: '400 Broadway St. Somewhere, CA',
+		// 		photo: 'http://img2.10bestmedia.com/Images/Photos/226313/LAVO-LV-Dining-lo-res--2796x2308-_54_990x660_201404240818.jpg',
+		// 		hours: '3pm - 11pm',
+		// 		stars: 0,
+		// 		type: 'Italian'
+		// 	};
+		// 	this.$.fd.save('/restaurants');
+		// 	this.$.fd.path = null;
+		// },
 
 		openModal: function() {
 			this.$.newReviewModal.open();
