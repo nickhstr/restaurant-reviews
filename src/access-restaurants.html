@@ -31,7 +31,7 @@
 				margin: 0;
 			}
 		</style>
-		<div class="menu center-wrap" role="menu">
+		<div class="menu center-wrap" role="toolbar" aria-label="Sort and Filter toolbar">
 			<access-menu-input
 				label="Sort By"
 				items="[[sortOptions]]"
@@ -49,9 +49,9 @@
 					stars="[[restaurant.stars]]"
 					rest-id="[[restaurant.$key]]"
 					type="[[restaurant.type]]"
-					reviews="[[restaurant.reviews]]"
 					image="[[restaurant.photo]]"
 					hours="[[restaurant.hours]]"
+					reviews-link
 					role="listitem"></access-restaurant>
 			</template>
 		</div>

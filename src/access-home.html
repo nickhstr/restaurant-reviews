@@ -105,29 +105,27 @@
 			<h1 class="section-header">[[primaryTitle]]</h1>
 			<h3>[[secondaryTitle]]</h3>
 		</header>
-		<main>
-			<article class="featured">
-				<h4 class="featured-title"><em>Today's Featured Restaurant</em></h4>
-				<template is="dom-repeat" items="[[queryData]]" as="restaurant" filter="featFilter">
-					<div class="featured-img">
-						<img src="[[restaurant.photo]]" alt$="Image of Featured Restaurant, [[restaurant.name]]">
-						<section>
-							<h4 class="rest-name">[[restaurant.name]]</h4>
-							<p>[[restaurant.address]]</p>
-							<access-stars number-of-stars="[[restaurant.stars]]" aria-label$="Rating: [[restaurant.stars]] out of 5 stars"></access-stars>
-						</section>
-					</div>
-				</template>
-			</article>
-			<article class="last">
-				<h2>They said what?!</h2>
-				<p class="home-p">
-					Wondering what that new hip restaurant that everyone can't seem to get enough of is like?
-					Get the scoop here.
-				</p>
-				<access-button><a href="/restaurants">See Restaurants</a></access-button>
-			</article>
-		</main>
+		<article class="featured">
+			<h4 class="featured-title"><em>Today's Featured Restaurant</em></h4>
+			<template is="dom-repeat" items="[[queryData]]" as="restaurant" filter="featFilter">
+				<div class="featured-img">
+					<img src="[[restaurant.photo]]" alt$="Image of Featured Restaurant, [[restaurant.name]]">
+					<section>
+						<h4 class="rest-name">[[restaurant.name]]</h4>
+						<p>[[restaurant.address]]</p>
+						<access-stars number-of-stars="[[restaurant.stars]]" aria-label$="Rating: [[restaurant.stars]] out of 5 stars"></access-stars>
+					</section>
+				</div>
+			</template>
+		</article>
+		<article class="last">
+			<h2>They said what?!</h2>
+			<p class="home-p">
+				Wondering what that new hip restaurant that everyone can't seem to get enough of is like?
+				Get the scoop here.
+			</p>
+			<access-button><a href="/restaurants">See Restaurants</a></access-button>
+		</article>
 	</template>
 	<script>
 		

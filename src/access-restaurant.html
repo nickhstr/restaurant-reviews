@@ -46,14 +46,17 @@
 			}
 		</style>
 		<div class="container center-wrap">
+			<!-- A background image was used to better control image size and layout. An "aria-label" is used as a substitute for "alt" -->
 			<div class="bg-img" aria-label$="Image of [[name]]"></div>
 			<div class="details center-wrap">
 				<h4>[[name]]</h4>
 				<p class="secondary">[[address]]</p>
 				<p class="secondary">[[type]]</p>
 				<p class="secondary">[[hours]]</p>
-				<access-stars small number-of-stars="[[stars]]"></access-stars>
-				<access-button><a on-tap="sendId" href$="/reviews/[[restId]]">Read Reviews</a></access-button>
+				<access-stars small number-of-stars="[[stars]]" aria-label$="Rating: [[stars]] out of 5 stars"></access-stars>
+				<template is="dom-if" if="[[reviewsLink]]">
+					<access-button><a href$="/[[restId]]">Read Reviews</a></access-button>
+				</template>
 			</div>
 		</div>
 	</template>
@@ -71,6 +74,12 @@
 			image: {
 				observer: '_updateImage'
 			},
+			reviewsLink: {
+				type: Boolean,
+				value: false,
+				notify: true,
+				reflectToAttribute: true
+			},
 			ariaLabel: {
 				value: 'Restaurant Information',
 				reflectToAttribute: true
@@ -80,13 +89,6 @@
 		_updateImage: function(newImage, oldImage) {
 			this.$$('.bg-img').style.background = 'url(' + newImage + ') no-repeat center center';
 		},
-
-		sendId: function() {
-			this.fire('newId', {
-				id: this.restId,
-				reviews: this.reviews
-			}, {bubbles: true});
-		}
 
 	});
 

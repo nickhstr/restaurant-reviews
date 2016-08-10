@@ -6,7 +6,7 @@
 <dom-module id="access-reviews">
 	<template>
 		<style include="access-button">
-			.add-review {
+			.center {
 				width: 100%;
 				display: flex;
 				justify-content: center;
@@ -37,7 +37,19 @@
 			id="restaurantsDoc"
 			app-name="restaurants">
 		</firebase-document>
-		<section class="add-review">
+		<section class="center">
+			<access-restaurant
+				name="[[restName]]"
+				address="[[restAddress]]"
+				stars="[[restStars]]"
+				rest-id="[[restId]]"
+				type="[[restType]]"
+				image="[[restPhoto]]"
+				hours="[[restHours]]"
+				role="listitem">
+			</access-restaurant>
+		</section>
+		<section class="center">
 			<access-button>
 				<button on-tap="openModal" aria-label="Add Review">Add Review</button>
 			</access-button>
@@ -45,6 +57,7 @@
 		<section class="reviews">
 			<template is="dom-repeat" items="[[reviews]]" as="review">
 				<access-review
+					role="listitem"
 					name="[[review.name]]"
 					stars="[[review.stars]]"
 					date="[[review.date]]"

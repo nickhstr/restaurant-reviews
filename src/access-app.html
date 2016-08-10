@@ -83,7 +83,7 @@
 		<app-header-layout>
 			<app-header role="navigation" reveals effects="waterfall">
 				<app-toolbar>
-					<div class="logo" main-title>
+					<div class="logo" main-title role="heading" aria-level="1">
 						<a class="nav-title" href="/" aria-label="Food for Thought Home">
 							<iron-icon icon="maps:restaurant-menu"></iron-icon>
 							<span class="title-text">[[appName]]</span>
@@ -105,17 +105,25 @@
 					name="restaurants"
 					query-data="[[queryData]]">
 				</access-restaurants>
-				<access-reviews
-					role="list"
-					name="reviews"
-					rest-id="[[restId]]"
-					on-open="openModal">
-				</access-reviews>
+				<template is="dom-repeat" items="[[queryData]]" as="restaurant">
+					<access-reviews
+						role="list"
+						name="[[restaurant.$key]]"
+						rest-id="[[restaurant.$key]]"
+						on-open="openModal"
+						rest-name="[[restaurant.name]]"
+						rest-address="[[restaurant.address]]"
+						rest-stars="[[restaurant.stars]]"
+						rest-type="[[restaurant.type]]"
+						rest-photo="[[restaurant.photo]]"
+						rest-hours="[[restaurant.hours]]">
+					</access-reviews>
+				</template>
 			</iron-pages>
 			<access-footer url="/" footer-title="[[appName]]"></access-footer>
 			<!-- <button on-tap="addRest">Add</button> -->
 		</app-header-layout>
-		<access-new-review id="newReviewModal" rest-id="[[restId]]" role="dialog"></access-new-review>
+		<access-new-review id="newReviewModal" rest-id="[[page]]" role="dialog"></access-new-review>
 	</template>
 	<script>
 		
@@ -139,21 +147,9 @@
 			'_routePathChanged(routeData.page)'
 		],
 
-		listeners: {
-			'newId': 'updateId'
-		},
-
 		_routePathChanged: function(page) {
 			this.page = page || 'home';
-			if (page !== 'reviews') {
-				this.restId = '';
-			}
 			Polymer.AppLayout.scroll({top: 0, behavior: 'silent'});
-		},
-
-		updateId: function(e) {
-			this.restId = e.detail.id;
-			this.reviews = e.detail.reviews;
 		},
 
 		// FUNCTION FOR ADDING NEW RESTAURANTS TO DATABASE
