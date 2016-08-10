@@ -1,6 +1,6 @@
+<!-- Individual review component -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="access-stars.html">
-
 <dom-module id="access-review">
 	<template>
 		<style>
@@ -9,21 +9,16 @@
 				width: 40vw;
 				text-align: center;
 			}
-
 			h4, p {
 				margin: 0;
 				font-weight: 100;
 			}
-
 			.date {
 				margin: 5px auto;
 			}
-
 			h4 {
 				font-size: 2em;
 			}
-
-
 			@media (max-width: 800px) {
 				article {
 					text-align: left;
@@ -31,7 +26,6 @@
 				}
 			}
 		</style>
-
 		<article>
 			<access-stars big number-of-stars="[[stars]]" aria-label$="Rating: [[stars]] out of 5 stars"></access-stars>
 			<h4>[[name]]</h4>

@@ -1,8 +1,8 @@
+<!-- List of reviews -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="access-review.html">
 <link rel="import" href="access-button.html">
-
 <dom-module id="access-reviews">
 	<template>
 		<style include="access-button">
@@ -12,44 +12,36 @@
 				justify-content: center;
 				margin: 20px auto;
 			}
-
 			.reviews {
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: space-around;
 				margin-bottom: 4em;
 			}
-
 			access-review {
 				margin: 20px;
 			}
-
-
 			@media (max-width: 800px) {
 				.reviews {
 					justify-content: flex-start;
 				}
 			}
 		</style>
-
 		<firebase-query
 			id="reviewsQuery"
 			app-name="restaurants"
 			path="/restaurants/[[restId]]/reviews"
 			data="{{reviewsData}}">
 		</firebase-query>
-
 		<firebase-document
 			id="restaurantsDoc"
 			app-name="restaurants">
 		</firebase-document>
-		
 		<section class="add-review">
 			<access-button>
 				<button on-tap="openModal" aria-label="Add Review">Add Review</button>
 			</access-button>
 		</section>
-
 		<section class="reviews">
 			<template is="dom-repeat" items="[[reviews]]" as="review">
 				<access-review
@@ -93,6 +85,7 @@
 			}
 		},
 
+		// Updates this.reviews and updates restaurant's overall star rating, saving it to the database
 		_updateReviews: function(newVal, oldVal) {
 			var self = this;
 			this.reviews = oldVal;
@@ -108,6 +101,7 @@
 			}
 		},
 
+		// Return average of numerical array values
 		getAverage: function(arr) {
 			var total = 0;
 			var len = arr.length;

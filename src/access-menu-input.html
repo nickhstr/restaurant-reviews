@@ -1,8 +1,8 @@
+<!-- Individual input, for use as sort or filter dropdown -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
-
 <dom-module id="access-menu-input">
 	<template>
 		<style>
@@ -10,7 +10,6 @@
 				width: var(--input-width);
 			}
 		</style>
-	
 		<paper-dropdown-menu label="[[label]]" value={{dropVal}}>
 			<paper-menu class="dropdown-content">
 				<template is="dom-repeat" items="[[items]]">
@@ -41,7 +40,6 @@
 
 		_sendVal: function(newVal, oldVal) {
 			this.fire('newval', {dropVal: this.dropVal});
-
 		}
 
 	});

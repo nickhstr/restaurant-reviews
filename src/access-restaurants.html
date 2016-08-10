@@ -1,8 +1,8 @@
+<!-- List of sortable/filterable restaurants -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="access-restaurant.html">
 <link rel="import" href="access-menu-input.html">
-
 <dom-module id="access-restaurants">
 	<template>
 		<style>
@@ -10,33 +10,27 @@
 				--input-width: 150px;
 				padding: 15px;
 			}
-
 			.menu {
 				margin-bottom: 20px;
 			}
-
 			.center-wrap {
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: center;
 			}
-
 			.restaurants {
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: space-around;
 				padding: 0 20px;
 			}
-
 			access-menu-input {
 				margin: auto 10px;
 			}
-
 			p {
 				margin: 0;
 			}
 		</style>
-
 		<div class="menu center-wrap" role="menu">
 			<access-menu-input
 				label="Sort By"
@@ -93,6 +87,7 @@
 			}
 		},
 		
+		// Passes value to return sort function
 		sortName: function(val) {
 			return function(a, b) {
 				var nameA = a.name.toUpperCase();

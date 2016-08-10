@@ -1,3 +1,4 @@
+<!-- App Shell -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
@@ -16,7 +17,6 @@
 <link rel="import" href="access-reviews.html">
 <link rel="import" href="access-footer.html">
 <link rel="import" href="access-new-review.html">
-
 <dom-module id="access-app">
 	<template>
 		<style>
@@ -31,15 +31,12 @@
 				font-family: 'Roboto', Helvetica, Arial, sans-serif;
 				color: var(--primary-txt-color);
 			}
-
 			a {
 				text-decoration: var(--txt-decoration);
 			}
-
 			app-toolbar {
 				background-color: #fff;
 			}
-
 			.nav-title {
 				color: var(--primary-txt-color);
 				text-transform: uppercase;
@@ -47,28 +44,22 @@
 				letter-spacing: 0.3em;
 				font-size: 0.8em;
 			}
-
 			.logo a {
 				pointer-events: auto;
 			}
-
 			p {
 				margin: 0;
 			}
-
 			paper-dialog {
 				width: 90vw;
 				height: 90vh;
 			}
-
-
 			@media (max-width: 550px) {
 				.title-text {
 					display: none;
 				}
 			}
 		</style>
-
 		<firebase-query
 			id="fq"
 			app-name="restaurants"
@@ -165,6 +156,7 @@
 			this.reviews = e.detail.reviews;
 		},
 
+		// FUNCTION FOR ADDING NEW RESTAURANTS TO DATABASE
 		// addRest: function() {
 		// 	this.docData = {
 		// 		name: 'Mario\'s Super Ristorante',

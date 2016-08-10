@@ -1,69 +1,50 @@
+<!-- Individual restaurant component -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="access-stars.html">
 <link rel="import" href="access-button.html">
-
 <dom-module id="access-restaurant">
 	<template>
 		<style include="access-button">
 			:host {
 				display: inline-block;
 			}
-
 			.center-wrap {
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: center;
 			}
-
 			.container {
 				margin: 20px;
 				width: 300px;
 			}
-
 			div.bg-img {
 				height: 225px;
 				width: 100%;
 			}
-
 			.details {
 				margin: 20px auto;
 			}
-
 			h4, p {
 				margin: 0;
 				width: 100%;
 				text-align: center;
 			}
-			
 			h4 {
 				font-size: 2em;
 				font-weight: 100;
 			}
-
 			.secondary {
 				font-weight: 100;
 			}
-
 			access-button {
 				width: 100%;
 				text-align: center;
 				margin: 20px auto;
 			}
-
 			access-star {
 				width: 100%;
 			}
 		</style>
-
-		<!-- <div class="container">
-			<h4>[[name]]</h4>
-			<p>[[address]]</p>
-			<p>[[type]]</p>
-			<span>
-				<access-stars small number-of-stars="[[stars]]"></access-stars>
-				<a on-tap="sendId" href$="/reviews/[[restId]]">Read Reviews</a>
-			</span>
-		</div> -->
 		<div class="container center-wrap">
 			<div class="bg-img" aria-label$="Image of [[name]]"></div>
 			<div class="details center-wrap">

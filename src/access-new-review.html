@@ -1,3 +1,4 @@
+<!-- New review dialog -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
@@ -5,7 +6,6 @@
 <link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="access-button.html">
-
 <dom-module id="access-new-review">
 	<template>
 		<style include="access-button">
@@ -15,41 +15,33 @@
 				display: flex;
 				flex-wrap: wrap;
 			}
-
 			paper-input, paper-textarea {
 				display: inline-block;
 				box-sizing: border-box;
 				width: 100%;
 			}
-
 			paper-input.half {
 				width: 50%;
 			}
-
 			paper-input.quarter {
 				width: 25%;
 			}
-
 			access-button {
 				display: block;
 				width: 100%;
 				text-align: center;
 				margin: 50px auto;
 			}
-
 			button {
 				transition: border 0.5s, color 0.5s;
 			}
-
 			button[disabled] {
 				border: 2px solid var(--secondary-txt-color);
 				color: var(--secondary-txt-color);
 			}
-
 			button[disabled]:hover {
 				cursor: default;
 			}
-
 			.close {
 				order: -1;
 				width: 100%;
@@ -57,7 +49,6 @@
 				padding: 0 20px;
 				text-align: right;
 			}
-
 			.close > button {
 				-webkit-appearance: none;
 				appearance: none;
@@ -65,74 +56,59 @@
 				background: transparent;
 				padding: 0;
 			}
-
 			.close > button:hover {
 				cursor: pointer;
 			}
-
 			iron-icon {
 				margin: 0;
 				padding: 0;
 			}
-
-
 			@media (max-width: 975px) {
 				paper-input.half {
 					width: 60%
 				}
-
 				paper-input.quarter {
 					width: 30%
 				}
 			}
-
 			@media (max-width: 820px) {
 				paper-dialog {
 					width: 85vw;
 				}
 			}
-
 			@media (max-width: 675px) {
 				paper-dialog {
 					width: 90vw;
 				}
-
 				paper-input.half {
 					width: 80%;
 				}
-
 				paper-input.quarter {
 					width: 50%;
 				}
 			}
-
 			@media (max-width: 445px) {
 				paper-dialog {
 					width: 95vw;
 					margin: auto 20px;
 				}
-
 				paper-input.half, paper-input.quarter {
 					width: 100%;
 				}
-
 				paper-input, paper-textarea,  {
 					padding: 10px;
 				}
-
 				.close {
 					padding: 0 10px;
 				}
 			}
 		</style>
-
 		<firebase-document
 			id="reviewDoc"
 			app-name="restaurants"
 			path="{{reviewPath}}"
 			data="{{reviewData}}">
 		</firebase-document>
-		
 		<div role="form" aria-label="New review dialog">
 			<paper-dialog id="addReview" modal>
 				<paper-input
