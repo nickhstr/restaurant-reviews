@@ -15,6 +15,10 @@
 				font-weight: 100;
 			}
 
+			.date {
+				margin: 5px auto;
+			}
+
 			h4 {
 				font-size: 2em;
 			}
@@ -29,8 +33,9 @@
 		</style>
 
 		<article>
-			<access-stars big number-of-stars="[[stars]]"></access-stars>
+			<access-stars big number-of-stars="[[stars]]" aria-label$="Rating: [[stars]] out of 5 stars"></access-stars>
 			<h4>[[name]]</h4>
+			<p class="date">[[formattedDate]]</p>
 			<p>[[comments]]</p>
 		</article>
 	</template>
@@ -38,7 +43,23 @@
 		
 	Polymer({
 
-		is: 'access-review'
+		is: 'access-review',
+
+		properties: {
+			date: {
+				notify: true,
+				observer: '_updateDate'
+			},
+			formattedDate: {
+				type: String,
+				notify: true
+			}
+		},
+
+		_updateDate: function(newVal, oldVal) {
+			var d = new Date(newVal);
+			this.formattedDate = d.toDateString();
+		}
 
 	});
 
