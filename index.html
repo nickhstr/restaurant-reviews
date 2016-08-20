@@ -23,5 +23,10 @@
 			name="restaurants">
 		</firebase-app>
 		<access-app></access-app>
+		<script>
+			if ('serviceWorker' in navigator) {
+			  navigator.serviceWorker.register('/service-worker.js');
+			}
+		</script>
 	</body>
 </html>
